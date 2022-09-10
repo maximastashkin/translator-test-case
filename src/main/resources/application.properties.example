@@ -1,0 +1,5 @@
+translator.yandex.api_url=https://translate.api.cloud.yandex.net/translate/
+translator.yandex.api_version=2
+translator.yandex.api_method=translate
+translator.yandex.request_method=POST
+translator.yandex.api_key=<your_api_key_here>

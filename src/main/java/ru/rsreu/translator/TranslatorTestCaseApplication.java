@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class TranslatorTestCaseApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(TranslatorTestCaseApplication.class, args);
     }
-
 }
