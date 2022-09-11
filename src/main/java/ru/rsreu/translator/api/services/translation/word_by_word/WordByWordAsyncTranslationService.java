@@ -15,13 +15,13 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Component
-public class AbstractWordByWordAsyncTranslationService extends AbstractWordByWordTranslationService {
+public class WordByWordAsyncTranslationService extends AbstractWordByWordTranslationService {
     private final AsyncTranslatorHolder asyncTranslatorHolder;
     private final StringIntoWordsAndSignsSplitter stringSplitter;
     private final StringIsWordChecker stringChecker;
 
     @Autowired
-    public AbstractWordByWordAsyncTranslationService(
+    public WordByWordAsyncTranslationService(
             AsyncTranslatorHolder asyncTranslatorHolder,
             StringIntoWordsAndSignsSplitter stringSplitter,
             StringIsWordChecker stringChecker) {
