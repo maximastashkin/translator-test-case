@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.rsreu.translator.api.controllers.dto.ErrorResponseBody;
 import ru.rsreu.translator.api.controllers.dto.ErrorType;
 import ru.rsreu.translator.translators.external.yandex.exception.YandexApiInternalErrorException;
+import ru.rsreu.translator.translators.external.yandex.exception.YandexApiUnsupportedLanguageException;
 
 import java.net.NoRouteToHostException;
 import java.net.SocketTimeoutException;
@@ -27,11 +28,21 @@ public class TranslateControllerAdvice {
 
     @ExceptionHandler(YandexApiInternalErrorException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<?> handleYandexApiInternalErrorException() {
+    public ResponseEntity<ErrorResponseBody> handleYandexApiInternalErrorException() {
         return new ResponseEntity<>(
                 new ErrorResponseBody(
                         ErrorType.EXTERNAL_TRANSLATION_API_ERROR,
                         "External api threw unhandled error"),
                 HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(YandexApiUnsupportedLanguageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponseBody> handleYandexApiUnsupportedLanguageException() {
+        return new ResponseEntity<>(
+                new ErrorResponseBody(ErrorType.EXTERNAL_TRANSLATION_API_UNSUPPORTED_LANGUAGE,
+                        "Source or target language isn't supported by external translation api"),
+                HttpStatus.BAD_REQUEST
+        );
     }
 }

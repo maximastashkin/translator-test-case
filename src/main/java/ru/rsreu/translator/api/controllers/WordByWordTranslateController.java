@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rsreu.translator.api.controllers.dto.TranslationRequestBody;
 import ru.rsreu.translator.api.controllers.dto.TranslationResponseBody;
-import ru.rsreu.translator.api.services.translation.word_by_word.WordByWordAsyncTranslationService;
+import ru.rsreu.translator.api.services.translation.word_by_word.AbstractWordByWordAsyncTranslationService;
+import ru.rsreu.translator.api.services.translation.word_by_word.AbstractWordByWordTranslationService;
 import ru.rsreu.translator.api.services.translation.word_by_word.WordByWordTranslationResult;
-import ru.rsreu.translator.api.services.translation.word_by_word.WordByWordTranslationService;
 
 import javax.validation.Valid;
 
@@ -19,11 +19,12 @@ import javax.validation.Valid;
 @RequestMapping("/word-by-word-translator")
 @Validated
 public class WordByWordTranslateController {
-    private final WordByWordTranslationService translatorService;
+    private final AbstractWordByWordTranslationService translatorService;
     private final TranslationRequestInfo translationRequestInfo;
 
     @Autowired
-    public WordByWordTranslateController(WordByWordAsyncTranslationService translatorService, TranslationRequestInfo translationRequestInfo) {
+    public WordByWordTranslateController(AbstractWordByWordAsyncTranslationService translatorService,
+                                         TranslationRequestInfo translationRequestInfo) {
         this.translatorService = translatorService;
         this.translationRequestInfo = translationRequestInfo;
     }
