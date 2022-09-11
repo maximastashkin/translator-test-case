@@ -1,5 +1,6 @@
 package ru.rsreu.translator.api.translators.external;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 import ru.rsreu.translator.api.translators.Translator;
 
@@ -11,15 +12,15 @@ public abstract class AbstractExternalTranslator implements Translator {
     private final String apiMethod;
 
     protected String fullApiPath;
-    protected final ApiRequestMethod apiRequestMethod;
-
+    protected final HttpMethod apiRequestMethod;
     protected final RestTemplate restTemplate;
 
     public AbstractExternalTranslator(
             String apiUrl,
             String apiVersion,
             String apiMethod,
-            ApiRequestMethod apiRequestMethod, RestTemplate restTemplate) {
+            HttpMethod apiRequestMethod, RestTemplate restTemplate
+    ) {
         this.apiUrl = apiUrl;
         this.apiVersion = apiVersion;
         this.apiMethod = apiMethod;
