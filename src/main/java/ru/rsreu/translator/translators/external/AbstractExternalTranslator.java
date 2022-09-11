@@ -1,8 +1,8 @@
-package ru.rsreu.translator.api.translators.external;
+package ru.rsreu.translator.translators.external;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
-import ru.rsreu.translator.api.translators.Translator;
+import ru.rsreu.translator.translators.Translator;
 
 import javax.annotation.PostConstruct;
 

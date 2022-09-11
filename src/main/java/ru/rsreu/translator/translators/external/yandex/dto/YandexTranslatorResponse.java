@@ -1,4 +1,4 @@
-package ru.rsreu.translator.api.translators.external.yandex.dto;
+package ru.rsreu.translator.translators.external.yandex.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

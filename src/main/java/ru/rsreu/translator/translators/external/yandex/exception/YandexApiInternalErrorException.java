@@ -1,4 +1,4 @@
-package ru.rsreu.translator.api.translators.external.yandex.exception;
+package ru.rsreu.translator.translators.external.yandex.exception;
 
 public class YandexApiInternalErrorException extends RuntimeException {
 }

@@ -1,5 +1,5 @@
-package ru.rsreu.translator.api.translators;
+package ru.rsreu.translator.api.services.translation;
 
-public interface Translator {
+public interface TranslationService {
     String translate(String sourceLanguageCode, String targetLanguageCode, String text);
 }

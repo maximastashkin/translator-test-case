@@ -1,44 +1,62 @@
-package ru.rsreu.translator.api.services.translating;
+package ru.rsreu.translator.api.services.translation.word_by_word;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.rsreu.translator.api.services.string_utils.StringIntoWordsAndSignsSplitter;
 import ru.rsreu.translator.api.services.string_utils.StringIsWordChecker;
-import ru.rsreu.translator.api.translators.Translator;
+import ru.rsreu.translator.api.services.translation.AsyncTranslatorHolder;
 
-import java.util.*;
-import java.util.concurrent.Callable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 @Component
-public class WordByWordAsyncTranslationService extends AbstractTranslationService {
-    private final ExecutorService executorService;
+public class WordByWordAsyncTranslationService extends WordByWordTranslationService {
+    private final AsyncTranslatorHolder asyncTranslatorHolder;
     private final StringIntoWordsAndSignsSplitter stringSplitter;
     private final StringIsWordChecker stringChecker;
 
     @Autowired
     public WordByWordAsyncTranslationService(
-            Translator translator,
-            ExecutorService executorService,
+            AsyncTranslatorHolder asyncTranslatorHolder,
             StringIntoWordsAndSignsSplitter stringSplitter,
             StringIsWordChecker stringChecker) {
-        super(translator);
-        this.executorService = executorService;
+        this.asyncTranslatorHolder = asyncTranslatorHolder;
         this.stringSplitter = stringSplitter;
         this.stringChecker = stringChecker;
     }
 
+    private static void cancelAllTasks(Map<String, Future<String>> translatedWordsFutures) {
+        translatedWordsFutures.values().forEach(future -> future.cancel(false));
+    }
+
     @Override
     public String translate(String sourceLanguageCode, String targetLanguageCode, String text) {
-        List<String> splitString = stringSplitter.splitIntoWords(text);
-        Map<String, Future<String>> translatedWordsFutures = sendAsyncTasksToTranslator(
-                formWordsTranslatingTasks(sourceLanguageCode, targetLanguageCode, formSetOfWords(splitString))
-        );
+        return getWordByWordTranslation(sourceLanguageCode, targetLanguageCode, text).getTranslatedString();
+    }
 
-        return formTranslatedString(splitString, getTranslatedWordsFromFutures(translatedWordsFutures));
+    @Override
+    public WordByWordTranslationResult getWordByWordTranslation(
+            String sourceLanguageCode,
+            String targetLanguageCode,
+            String text
+    ) {
+        List<String> splitString = stringSplitter.splitIntoWords(text);
+        Set<String> uniqueWords = formSetOfWords(splitString);
+        Map<String, Future<String>> translatedWordsFutures = new HashMap<>();
+        uniqueWords.forEach(it ->
+                translatedWordsFutures.put(
+                        it, asyncTranslatorHolder.sendTranslationTask(sourceLanguageCode, targetLanguageCode, it)
+                )
+        );
+        Map<String, String> translatedWords = getTranslatedWordsFromFutures(translatedWordsFutures);
+        return WordByWordTranslationResult.builder()
+                .translatedString(formTranslatedString(splitString, translatedWords))
+                .translatedWords(translatedWords).build();
     }
 
     private Map<String, String> getTranslatedWordsFromFutures(Map<String, Future<String>> translatedWordsFutures) {
@@ -53,10 +71,6 @@ public class WordByWordAsyncTranslationService extends AbstractTranslationServic
                 throw (RuntimeException) e.getCause();
             }
         }));
-    }
-
-    private static void cancelAllTasks(Map<String, Future<String>> translatedWordsFutures) {
-        translatedWordsFutures.values().forEach(future -> future.cancel(false));
     }
 
     private String formTranslatedString(
@@ -76,23 +90,5 @@ public class WordByWordAsyncTranslationService extends AbstractTranslationServic
 
     private Set<String> formSetOfWords(List<String> splitString) {
         return splitString.stream().filter(stringChecker::isWord).collect(Collectors.toSet());
-    }
-
-    private Map<String, Future<String>> sendAsyncTasksToTranslator(Map<String, Callable<String>> translatingTasks) {
-        return translatingTasks.entrySet()
-                .stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, it -> executorService.submit(it.getValue())));
-    }
-
-    private Map<String, Callable<String>> formWordsTranslatingTasks(
-            String sourceLanguageCode, String targetLanguageCode, Collection<String> words) {
-        Map<String, Callable<String>> result = new HashMap<>();
-        words.forEach(it -> result.put(it, () -> {
-            if (words.size() > 20) {
-                Thread.sleep(500);
-            }
-            return translator.translate(sourceLanguageCode, targetLanguageCode, it);
-        }));
-        return result;
     }
 }

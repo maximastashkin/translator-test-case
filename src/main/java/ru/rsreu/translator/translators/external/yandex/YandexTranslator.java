@@ -1,4 +1,4 @@
-package ru.rsreu.translator.api.translators.external.yandex;
+package ru.rsreu.translator.translators.external.yandex;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +10,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import ru.rsreu.translator.api.translators.external.AbstractExternalTranslator;
-import ru.rsreu.translator.api.translators.external.yandex.dto.YandexTranslationRequest;
-import ru.rsreu.translator.api.translators.external.yandex.dto.YandexTranslatorResponse;
+import ru.rsreu.translator.translators.external.AbstractExternalTranslator;
+import ru.rsreu.translator.translators.external.yandex.dto.YandexTranslationRequest;
+import ru.rsreu.translator.translators.external.yandex.dto.YandexTranslatorResponse;
 
 import javax.annotation.PostConstruct;
 
@@ -61,7 +61,8 @@ public class YandexTranslator extends AbstractExternalTranslator {
                                 "| source language:%s | target language: %s | text: %s",
                         request.getSourceLanguageCode(), request.getTargetLanguageCode(), request.getTexts())
         );
-        return restTemplate.exchange(fullApiPath, apiRequestMethod, httpEntity, YandexTranslatorResponse.class)
+        return restTemplate
+                .exchange(fullApiPath, apiRequestMethod, httpEntity, YandexTranslatorResponse.class)
                 .getBody();
     }
 
