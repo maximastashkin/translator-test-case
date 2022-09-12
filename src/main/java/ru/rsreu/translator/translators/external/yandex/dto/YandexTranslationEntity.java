@@ -1,6 +1,5 @@
 package ru.rsreu.translator.translators.external.yandex.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -6,7 +6,8 @@ import lombok.Data;
 @Builder
 @Data
 public class TranslatedWord {
-    private final TranslationRequestEntity request;
-    private final String sourceWords;
-    private final String translatedWord;
+    private long id;
+    private TranslationRequestEntity request;
+    private String sourceWord;
+    private String translatedWord;
 }

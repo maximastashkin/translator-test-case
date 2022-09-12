@@ -14,8 +14,8 @@ import java.net.NoRouteToHostException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-@RestControllerAdvice(basePackageClasses = WordByWordTranslateController.class)
-public class TranslateControllerAdvice {
+@RestControllerAdvice(basePackageClasses = WordByWordTranslationController.class)
+public class WordByWordTranslationControllerAdvice {
     @ExceptionHandler({NoRouteToHostException.class, UnknownHostException.class, SocketTimeoutException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorResponseBody> handleApiConnectionException() {

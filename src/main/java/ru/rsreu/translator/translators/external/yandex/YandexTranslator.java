@@ -56,14 +56,16 @@ public class YandexTranslator extends AbstractExternalTranslator {
 
     private YandexTranslatorResponse performApiRequest(YandexTranslationRequest request) {
         HttpEntity<YandexTranslationRequest> httpEntity = new HttpEntity<>(request, requestHeaders);
-        logger.info(
-                String.format("Performing translation with yandex ai translation api " +
-                                "| source language:%s | target language: %s | text: %s",
-                        request.getSourceLanguageCode(), request.getTargetLanguageCode(), request.getTexts())
-        );
+        logger.info(formLogString(request));
         return restTemplate
                 .exchange(fullApiPath, apiRequestMethod, httpEntity, YandexTranslatorResponse.class)
                 .getBody();
+    }
+
+    private static String formLogString(YandexTranslationRequest request) {
+        return String.format("Performing translation with yandex ai translation api " +
+                        "| source language:%s | target language: %s | text: %s",
+                request.getSourceLanguageCode(), request.getTargetLanguageCode(), request.getTexts());
     }
 
     private YandexTranslationRequest buildRequest(String sourceLanguageCode, String targetLanguageCode, String text) {

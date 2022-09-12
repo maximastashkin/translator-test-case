@@ -9,11 +9,12 @@ import java.util.Collection;
 @Builder
 @Data
 public class TranslationRequestEntity {
-    private final String ipAddress;
-    private final LocalDateTime requestTime;
-    private final String text;
-    private final String sourceLanguageCode;
-    private final String targetLanguageCode;
-    private final String translation;
-    private final Collection<TranslatedWord> words;
+    private long id;
+    private String ipAddress;
+    private LocalDateTime requestTime;
+    private String text;
+    private String sourceLanguageCode;
+    private String targetLanguageCode;
+    private String translation;
+    private Collection<TranslatedWord> words;
 }

@@ -28,7 +28,8 @@ public class AsyncTranslatorHolder {
     @PostConstruct
     public void init() {
         if (hitsPerSecond != 0) {
-            hitsDelayMs = (long) (((double) threadsCount / hitsPerSecond) * 1000L) + 15;
+            hitsDelayMs = (long) (((double) threadsCount / hitsPerSecond) * 1000L);
+            hitsDelayMs += hitsDelayMs * 0.1;
         }
     }
 

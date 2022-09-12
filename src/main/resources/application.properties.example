@@ -1,3 +1,10 @@
+spring.datasource.url=jdbc:h2:file:./data/translations
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=<your_password_here>
+spring.h2.console.enabled=true
+spring.sql.init.mode=always
+
 translator.yandex.api_url=https://translate.api.cloud.yandex.net/translate/
 translator.yandex.api_version=2
 translator.yandex.api_method=translate

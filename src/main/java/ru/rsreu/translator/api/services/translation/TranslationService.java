@@ -1,5 +1,7 @@
 package ru.rsreu.translator.api.services.translation;
 
+import ru.rsreu.translator.api.controllers.dto.TranslationInput;
+
 public interface TranslationService {
-    String translate(String sourceLanguageCode, String targetLanguageCode, String text);
+    String translate(TranslationInput translationInput);
 }

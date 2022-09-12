@@ -41,3 +41,5 @@ build/
 
 **/application.properties
 !**/application.properties.example
+
+data/
