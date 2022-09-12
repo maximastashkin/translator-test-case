@@ -35,11 +35,7 @@ public class AsyncTranslatorHolder {
 
     public Future<String> sendTranslationTask(String sourceLanguageCode, String targetLanguageCode, String text) {
         return executorService.submit(() -> {
-            try {
-                Thread.sleep(hitsDelayMs);
-            } catch (InterruptedException e) {
-                throw new InterruptedException();
-            }
+            Thread.sleep(hitsDelayMs);
             return translator.translate(sourceLanguageCode, targetLanguageCode, text);
         });
     }
