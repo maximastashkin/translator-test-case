@@ -4,7 +4,7 @@
 Because the used api yandex ai translation limits the number of requests to 20 per second, I had to set the calculated delay between calls to the api. For 10 threads, for example, 10 / 20 = 0.5 seconds. This calculation is automatically performed for the selected number of threads.
 
 ## API
-The only route available is /word-by-word-translator/translate. Documentation available at /swagger-ui.html
+The only route available is **/word-by-word-translator/translate** . Documentation available at /swagger-ui.html
 
 **input application/json:**
 ```
