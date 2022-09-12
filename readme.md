@@ -1,13 +1,32 @@
 # tinkoff-translator-test-case
 ## Word by word async translator using yandex api
 
-Because the used api yandex ai translation limits the number of requests to 20 per second, I had to set the calculated delay between calls to the api. For 10 threads, for example, 10 / 20 = 0.5 seconds. This calculation is automatically performed for the selected number of streams.
+Because the used api yandex ai translation limits the number of requests to 20 per second, I had to set the calculated delay between calls to the api. For 10 threads, for example, 10 / 20 = 0.5 seconds. This calculation is automatically performed for the selected number of threads.
+
+## API
+The only route available is /word-by-word-translator/translate. Documentation available at /swagger-ui.html
+
+**input application/json:**
+```
+{
+    "sourceLanguageCode": "en",
+    "targetLanguageCode": "ru",
+    "text": "To Sherlock Holmes she is always the woman."
+}
+```
+
+**output appliaction/json:**
+```
+{
+    "translation": "К Шерлок Холмс она является всегда то женщина."
+}
+```
 
 ## Database
 Used H2 database in embedded mode. For its inspection, the console is available at the url: host:port/h2-console. The username and password are set on first run in application.properties or when the Docker container is started. Database files are stored in ./data_storage .
 
 ## Docker
-#### To start, you need yandex api key and api folder id. If not, I can provide mine for testing (telegram: [@maxikexe](https://t.me/maxikexe)).
+#### To start, you need yandex api key and api folder id. If you doesn't have, I can provide mine for testing (telegram: [@maxikexe](https://t.me/maxikexe)).
 ```sh
 docker build -t translator-test-case .
 ```
