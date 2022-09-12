@@ -29,7 +29,6 @@ public class AsyncTranslatorHolder {
     public void init() {
         if (hitsPerSecond != 0) {
             hitsDelayMs = (long) (((double) threadsCount / hitsPerSecond) * 1000L);
-            hitsDelayMs += hitsDelayMs * 0.1;
         }
     }
 

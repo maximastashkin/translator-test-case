@@ -39,7 +39,4 @@ build/
 ### VS Code ###
 .vscode/
 
-**/application.properties
-!**/application.properties.example
-
-data/
+data_storage/

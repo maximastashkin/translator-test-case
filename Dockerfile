@@ -9,4 +9,4 @@ FROM openjdk:8-jdk-alpine
 
 COPY --from=builder /usr/src/app/target/translator-test-case-0.0.1-SNAPSHOT.jar /usr/app/translator-test-case-0.0.1-SNAPSHOT.jar
 
-ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /usr/app/translator-test-case-0.0.1-SNAPSHOT.jar ${@}"]
+ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /usr/app/translator-test-case-0.0.1-SNAPSHOT.jar"]

@@ -13,8 +13,8 @@ public class YandexApiRestTemplateConfiguration {
     public RestTemplate yandexRestTemplate(YandexRestTemplateResponseErrorHandler errorHandler) {
         return new RestTemplateBuilder()
                 .errorHandler(errorHandler)
-                .setReadTimeout(Duration.ofSeconds(1))
-                .setConnectTimeout(Duration.ofSeconds(1))
+                .setReadTimeout(Duration.ofMillis(1500))
+                .setConnectTimeout(Duration.ofMillis(1500))
                 .build();
     }
 }
