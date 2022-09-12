@@ -7,7 +7,7 @@ Because the used api yandex ai translation limits the number of requests to 20 p
 Used H2 database in embedded mode. For its inspection, the console is available at the url: host:port/h2-console. The username and password are set on first run in application.properties or when the Docker container is started. Database files are stored in ./data_storage .
 
 ## Docker
-#### To start, you need yandex api key and api folder id. If not, I can provide mine for testing (telegram: @maxikexe).
+#### To start, you need yandex api key and api folder id. If not, I can provide mine for testing (telegram: [@maxikexe](https://t.me/maxikexe)).
 ```sh
 docker build -t translator-test-case .
 ```
